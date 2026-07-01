@@ -248,6 +248,58 @@ function PhotoStrip({ src, rotate = 0, width = 200, className = '' }) {
   )
 }
 
+function CyclingPhotoStrip({
+  srcs,
+  rotate = 0,
+  width = 200,
+  interval = 3600,
+  startIndex = 0,
+  className = '',
+}) {
+  const [i, setI] = useState(startIndex % srcs.length)
+  useEffect(() => {
+    const t = setInterval(
+      () => setI((v) => (v + 1) % srcs.length),
+      interval,
+    )
+    return () => clearInterval(t)
+  }, [srcs.length, interval])
+
+  return (
+    <div
+      className={`relative bg-white p-1.5 rounded-md photostrip-shadow overflow-hidden ${className}`}
+      style={{ transform: `rotate(${rotate}deg)`, '--r': `${rotate}deg`, width: `${width}px` }}
+    >
+      {/* Preload the whole set so transitions are instant */}
+      <div className="hidden">
+        {srcs.map((s) => (
+          <img key={s} src={s} alt="" />
+        ))}
+      </div>
+      {/* Sizer keeps card height stable while the image cross-fades */}
+      <img
+        src={srcs[0]}
+        alt=""
+        aria-hidden="true"
+        className="w-full h-auto block invisible"
+      />
+      <AnimatePresence mode="sync">
+        <motion.img
+          key={i}
+          src={srcs[i]}
+          alt="Says Cheese photostrip"
+          initial={{ opacity: 0, scale: 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.9, ease: 'easeInOut' }}
+          className="w-full h-auto block absolute inset-1.5"
+          style={{ width: 'calc(100% - 0.75rem)' }}
+        />
+      </AnimatePresence>
+    </div>
+  )
+}
+
 /* ---------- NAVBAR ---------- */
 
 function Nav({ onCta }) {
@@ -363,24 +415,43 @@ function Hero({ onCta }) {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/40" />
       </motion.div>
 
-      {/* Floating real photostrips */}
+      {/* Floating real photostrips — cycling */}
       <motion.div
         style={{ opacity }}
         className="absolute top-[16%] right-[5%] hidden md:block animate-float z-10"
       >
-        <PhotoStrip src={PHOTOSTRIPS[0]} rotate={8} width={210} />
+        <CyclingPhotoStrip
+          srcs={PHOTOSTRIPS}
+          rotate={8}
+          width={210}
+          interval={3800}
+          startIndex={0}
+        />
       </motion.div>
       <motion.div
         style={{ opacity }}
         className="absolute bottom-[18%] right-[16%] hidden lg:block animate-float z-10"
       >
-        <PhotoStrip src={PHOTOSTRIPS[4]} rotate={-12} width={190} className="[animation-delay:1s]" />
+        <CyclingPhotoStrip
+          srcs={PHOTOSTRIPS}
+          rotate={-12}
+          width={190}
+          interval={4200}
+          startIndex={2}
+          className="[animation-delay:1s]"
+        />
       </motion.div>
       <motion.div
         style={{ opacity }}
         className="absolute top-[54%] left-[3%] hidden lg:block animate-float z-10"
       >
-        <PhotoStrip src={PHOTOSTRIPS[3]} rotate={-6} width={200} />
+        <CyclingPhotoStrip
+          srcs={PHOTOSTRIPS}
+          rotate={-6}
+          width={200}
+          interval={4600}
+          startIndex={4}
+        />
       </motion.div>
 
       {/* Content */}
