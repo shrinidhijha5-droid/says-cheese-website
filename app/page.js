@@ -345,7 +345,7 @@ function Nav({ onCta }) {
             onClick={onCta}
             className="bg-blush text-black hover:bg-white rounded-full px-5 font-medium"
           >
-            Book a Demo <ArrowRight className="ml-1.5 w-4 h-4" />
+            Become a Partner <ArrowRight className="ml-1.5 w-4 h-4" />
           </Button>
         </div>
         <button
@@ -381,7 +381,7 @@ function Nav({ onCta }) {
               }}
               className="bg-blush text-black hover:bg-white rounded-full"
             >
-              Book a Demo
+              Become a Partner
             </Button>
           </motion.div>
         )}
@@ -460,10 +460,10 @@ function Hero({ onCta }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="inline-flex items-center gap-2 glass-blush px-4 py-1.5 rounded-full text-xs uppercase tracking-[0.25em] text-blush mb-8"
+          className="inline-flex items-center gap-2 glass-blush px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-blush mb-6 sm:mb-8"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-blush animate-pulse" />
-          Kanpur-based · Premium Experiential Photobooths
+          <span className="whitespace-nowrap">Kanpur-based · Premium Photobooths</span>
         </motion.div>
 
         <motion.h1
@@ -500,7 +500,7 @@ function Hero({ onCta }) {
             size="lg"
             className="bg-blush text-black hover:bg-white rounded-full h-14 px-8 text-base font-medium group"
           >
-            Book a Demo
+            Become a Partner
             <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Button>
           <a href="#locations">
@@ -644,7 +644,7 @@ function Problem() {
 function Solution() {
   return (
     <section className="relative py-32 md:py-40 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -652,14 +652,14 @@ function Solution() {
           transition={{ duration: 0.8 }}
         >
           <p className="text-blush uppercase tracking-[0.3em] text-xs mb-6">The Solution</p>
-          <h2 className="font-heading text-5xl md:text-7xl font-black leading-[0.95] tracking-tight">
+          <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight">
             Marketing
             <br />
             people
             <br />
             <span className="italic font-light text-gradient-blush">never throw away.</span>
           </h2>
-          <div className="mt-10 space-y-4 text-white/70 text-lg leading-relaxed max-w-md">
+          <div className="mt-10 space-y-4 text-white/70 text-base md:text-lg leading-relaxed max-w-md">
             <p>Traditional experiential marketing costs businesses thousands of rupees every month — and disappears the moment the campaign ends.</p>
             <p>Every printed photostrip becomes a physical reminder of your venue. Every customer leaves carrying your brand.</p>
             <p className="text-blush">Every memory reminds them exactly where it happened.</p>
@@ -670,7 +670,7 @@ function Solution() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="relative h-[600px]"
+          className="relative h-[600px] hidden lg:block"
         >
           <div className="absolute top-4 left-4 animate-float">
             <PhotoStrip src={PHOTOSTRIPS[0]} rotate={-8} width={210} />
@@ -1136,13 +1136,13 @@ function WhyPartner() {
             The old way vs. <span className="text-gradient-blush italic">the Says Cheese way.</span>
           </h2>
         </div>
-        <div className="glass rounded-3xl overflow-hidden">
-          <div className="grid grid-cols-3 items-center px-6 py-5 border-b border-white/10">
-            <div className="text-white/40 text-xs uppercase tracking-widest">Feature</div>
-            <div className="text-center text-white/40 text-xs uppercase tracking-widest">
-              Traditional Marketing
+        <div className="glass rounded-2xl md:rounded-3xl overflow-hidden">
+          <div className="grid grid-cols-3 items-center px-3 sm:px-6 py-4 sm:py-5 border-b border-white/10">
+            <div className="text-white/40 text-[10px] sm:text-xs uppercase tracking-widest">Feature</div>
+            <div className="text-center text-white/40 text-[10px] sm:text-xs uppercase tracking-widest">
+              Traditional
             </div>
-            <div className="text-center text-blush text-xs uppercase tracking-widest font-semibold">
+            <div className="text-center text-blush text-[10px] sm:text-xs uppercase tracking-widest font-semibold">
               Says Cheese
             </div>
           </div>
@@ -1153,16 +1153,16 @@ function WhyPartner() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.04 }}
-              className="grid grid-cols-3 items-center px-6 py-5 border-b border-white/5 last:border-0 hover:bg-white/[0.02]"
+              className="grid grid-cols-3 items-center px-3 sm:px-6 py-4 sm:py-5 border-b border-white/5 last:border-0 hover:bg-white/[0.02] gap-2"
             >
-              <div className="text-white/80 text-sm md:text-base font-medium">{row.feature}</div>
-              <div className="text-center text-white/40 text-sm">
-                <X className="w-4 h-4 inline text-red-400/60 mr-1.5" />
-                {row.trad}
+              <div className="text-white/80 text-xs sm:text-sm md:text-base font-medium">{row.feature}</div>
+              <div className="text-center text-white/40 text-xs sm:text-sm">
+                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 inline text-red-400/60 sm:mr-1.5" />
+                <span className="hidden sm:inline">{row.trad}</span>
               </div>
-              <div className="text-center text-blush text-sm md:text-base">
-                <Check className="w-4 h-4 inline text-blush mr-1.5" />
-                {row.sc}
+              <div className="text-center text-blush text-xs sm:text-sm md:text-base">
+                <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 inline text-blush sm:mr-1.5" />
+                <span>{row.sc}</span>
               </div>
             </motion.div>
           ))}
@@ -1301,12 +1301,11 @@ function FAQ() {
 /* ---------- CONTACT ---------- */
 
 function Contact({ onSubmitLead, contactRef }) {
-  const [tab, setTab] = useState('demo')
+  const [tab, setTab] = useState('contact')
   const [form, setForm] = useState({ name: '', contact: '', email: '', venue: '', message: '' })
   const [loading, setLoading] = useState(false)
 
   const TABS = [
-    { id: 'demo', label: 'Book a Demo' },
     { id: 'contact', label: 'Become a Partner' },
     { id: 'franchise', label: 'Franchise Enquiry' },
   ]
@@ -1377,11 +1376,9 @@ function Contact({ onSubmitLead, contactRef }) {
             />
             <Textarea
               placeholder={
-                tab === 'demo'
-                  ? 'Tell us about your venue — footfall, timings, audience.'
-                  : tab === 'franchise'
+                tab === 'franchise'
                   ? 'Your background & why this city.'
-                  : 'How would you like to partner?'
+                  : 'Tell us about your venue — footfall, timings, audience.'
               }
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
