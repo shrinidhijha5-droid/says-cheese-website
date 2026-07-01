@@ -17,11 +17,11 @@ const dmSans = DM_Sans({
 })
 
 export const metadata = {
-  title: 'Says Cheese — India\u2019s Premium Photobooth Company',
+  title: 'Says Cheese — Kanpur-based Premium Experiential Photobooth Company',
   description:
-    'Premium aesthetic photobooths installed at zero upfront cost. Every customer leaves carrying your brand. Book a demo.',
+    'Kanpur-based premium experiential photobooth company. Premium aesthetic photobooths installed at zero cost to venue partners. Book a demo.',
   keywords:
-    'photobooth, cafe photobooth, mall photobooth, photostrip, franchise, Says Cheese, India',
+    'photobooth Kanpur, cafe photobooth, experiential marketing, photostrip, Says Cheese, Kanpur',
 }
 
 export default function RootLayout({ children }) {

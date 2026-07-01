@@ -103,9 +103,7 @@ const HOW_STEPS = [
 
 const LOCATIONS = [
   { name: 'Seezen Café', city: 'Kanpur', status: 'Operational', img: IMG.cafeInterior },
-  { name: 'District 9 Arena', city: 'Noida', status: 'Operational', img: IMG.arena },
-  { name: 'Mumbai', city: 'Bandra West', status: 'Coming Soon', img: IMG.mall },
-  { name: 'Bengaluru', city: 'Indiranagar', status: 'Coming Soon', img: IMG.cafeNeon },
+  { name: 'Studio XO', city: 'Kanpur', status: 'Operational', img: IMG.arena },
 ]
 
 const GALLERY = [
@@ -391,7 +389,7 @@ function Hero({ onCta }) {
           className="inline-flex items-center gap-2 glass-blush px-4 py-1.5 rounded-full text-xs uppercase tracking-[0.25em] text-blush mb-8"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-blush animate-pulse" />
-          India's Premium Photobooth Company
+          Kanpur-based · Premium Experiential Photobooths
         </motion.div>
 
         <motion.h1
@@ -884,13 +882,13 @@ function Locations() {
           <div>
             <p className="text-blush uppercase tracking-[0.3em] text-xs mb-4">Our Locations</p>
             <h2 className="font-heading text-4xl md:text-6xl font-bold leading-tight">
-              Now serving. <span className="text-gradient-blush italic">Soon everywhere.</span>
+              Kanpur first. <span className="text-gradient-blush italic">Then, carefully.</span>
             </h2>
           </div>
-          <div className="text-white/50 text-sm">Currently expanding across Tier-1 India</div>
+          <div className="text-white/50 text-sm">Kanpur-based · Currently by invitation only</div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl">
           {LOCATIONS.map((l, i) => (
             <motion.div
               key={l.name}
@@ -898,31 +896,35 @@ function Locations() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="group relative rounded-2xl overflow-hidden border border-white/10 h-[380px]"
+              className="group relative rounded-2xl overflow-hidden border border-white/10 h-[420px]"
             >
               <img src={l.img} alt={l.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
               <div className="relative h-full flex flex-col justify-between p-6">
                 <div className="flex items-center justify-between">
-                  <div
-                    className={`px-3 py-1 rounded-full text-[10px] uppercase tracking-widest ${
-                      l.status === 'Operational'
-                        ? 'bg-blush text-black'
-                        : 'bg-white/10 text-white/80 border border-white/20'
-                    }`}
-                  >
+                  <div className="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest bg-blush text-black">
                     {l.status}
                   </div>
                   <MapPin className="w-4 h-4 text-blush" />
                 </div>
                 <div>
-                  <div className="font-heading text-2xl font-semibold">{l.name}</div>
+                  <div className="font-heading text-3xl font-semibold">{l.name}</div>
                   <div className="text-white/60 text-sm mt-1">{l.city}</div>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-10 flex items-center gap-3 text-white/50 text-sm"
+        >
+          <span className="w-8 h-px bg-blush/50" />
+          <span className="uppercase tracking-[0.3em] text-xs">More premium locations coming soon</span>
+        </motion.div>
       </div>
     </section>
   )
@@ -1343,8 +1345,17 @@ function Footer() {
             </span>
           </div>
           <p className="text-white/50 text-sm max-w-md leading-relaxed">
-            India's premium aesthetic photobooth company. Marketing people never throw away.
+            Kanpur-based premium experiential photobooth company. Marketing people never throw away.
           </p>
+          <a
+            href="https://instagram.com/sayscheese.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 glass-blush rounded-full px-4 py-2 text-xs text-blush hover:bg-blush hover:text-black transition-colors"
+          >
+            <Instagram className="w-3.5 h-3.5" />
+            Follow @sayscheese.in
+          </a>
         </div>
         <div>
           <div className="text-blush uppercase text-xs tracking-widest mb-4">Explore</div>
@@ -1360,8 +1371,17 @@ function Footer() {
           <ul className="space-y-2 text-sm text-white/60">
             <li className="flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Business · +91 {CONTACTS.business}</li>
             <li className="flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Franchise · +91 {CONTACTS.franchise}</li>
-            <li className="flex items-center gap-2"><Instagram className="w-3.5 h-3.5" /> @says.cheese.in</li>
-            <li className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5" /> Kanpur · Noida · India</li>
+            <li>
+              <a
+                href="https://instagram.com/sayscheese.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-blush transition-colors"
+              >
+                <Instagram className="w-3.5 h-3.5" /> @sayscheese.in
+              </a>
+            </li>
+            <li className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5" /> Kanpur, India</li>
           </ul>
         </div>
       </div>
