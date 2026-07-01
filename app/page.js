@@ -44,6 +44,14 @@ import { toast } from 'sonner'
 
 /* ---------- CONTENT / DATA ---------- */
 
+const PHOTOSTRIPS = [
+  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/bvsncbst_20260528_171350_231_1x.jpg',
+  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/fjszz590_20260525_195958_672_1x.jpg',
+  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/4837adtj_20260525_172934_564_1x.jpg',
+  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/aoiz5j8q_20260524_190021_478_1x%20%281%29.jpg',
+  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/gbbky7bg_20260628_224556_308_1x.jpg',
+]
+
 const IMG = {
   hero: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/sa0odd86_WhatsApp%20Image%202026-06-01%20at%2014.02.06%20%281%29.jpeg',
   boothWide: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/x63ssdjo_WhatsApp%20Image%202026-06-01%20at%2014.01.49.jpeg',
@@ -224,22 +232,18 @@ function MouseSpotlight() {
   )
 }
 
-function PhotoStrip({ imgs, rotate = 0, className = '' }) {
+function PhotoStrip({ src, rotate = 0, width = 200, className = '' }) {
   return (
     <div
-      className={`relative bg-white p-2 pb-10 rounded-sm photostrip-shadow ${className}`}
-      style={{ transform: `rotate(${rotate}deg)`, '--r': `${rotate}deg` }}
+      className={`relative bg-white p-1.5 rounded-md photostrip-shadow overflow-hidden ${className}`}
+      style={{ transform: `rotate(${rotate}deg)`, '--r': `${rotate}deg`, width: `${width}px` }}
     >
-      <div className="flex flex-col gap-1 w-[110px]">
-        {imgs.map((src, i) => (
-          <div key={i} className="w-full h-[80px] overflow-hidden bg-neutral-200">
-            <img src={src} alt="" className="w-full h-full object-cover grayscale-[15%]" />
-          </div>
-        ))}
-      </div>
-      <div className="absolute bottom-1.5 left-0 right-0 text-center text-[9px] tracking-[0.3em] font-heading text-black/70">
-        SAYS CHEESE
-      </div>
+      <img
+        src={src}
+        alt="Says Cheese photostrip"
+        loading="lazy"
+        className="w-full h-auto block"
+      />
     </div>
   )
 }
@@ -342,10 +346,6 @@ function Hero({ onCta }) {
   const y = useTransform(scrollYProgress, [0, 1], [0, 180])
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
 
-  const stripImgs1 = [IMG.selfie, IMG.friends, IMG.laughing, IMG.coffee]
-  const stripImgs2 = [IMG.qrScan, IMG.cafeInterior, IMG.booth, IMG.mall]
-  const stripImgs3 = [IMG.laughing, IMG.selfie, IMG.friends, IMG.qrPhone]
-
   return (
     <section
       ref={ref}
@@ -363,24 +363,24 @@ function Hero({ onCta }) {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/40" />
       </motion.div>
 
-      {/* Floating photostrips */}
+      {/* Floating real photostrips */}
       <motion.div
         style={{ opacity }}
-        className="absolute top-[18%] right-[6%] hidden md:block animate-float z-10"
+        className="absolute top-[16%] right-[5%] hidden md:block animate-float z-10"
       >
-        <PhotoStrip imgs={stripImgs1} rotate={8} />
+        <PhotoStrip src={PHOTOSTRIPS[0]} rotate={8} width={210} />
       </motion.div>
       <motion.div
         style={{ opacity }}
-        className="absolute bottom-[22%] right-[18%] hidden lg:block animate-float z-10"
+        className="absolute bottom-[18%] right-[16%] hidden lg:block animate-float z-10"
       >
-        <PhotoStrip imgs={stripImgs2} rotate={-12} className="[animation-delay:1s]" />
+        <PhotoStrip src={PHOTOSTRIPS[4]} rotate={-12} width={190} className="[animation-delay:1s]" />
       </motion.div>
       <motion.div
         style={{ opacity }}
-        className="absolute top-[52%] left-[3%] hidden lg:block animate-float z-10"
+        className="absolute top-[54%] left-[3%] hidden lg:block animate-float z-10"
       >
-        <PhotoStrip imgs={stripImgs3} rotate={-6} />
+        <PhotoStrip src={PHOTOSTRIPS[3]} rotate={-6} width={200} />
       </motion.div>
 
       {/* Content */}
@@ -602,16 +602,16 @@ function Solution() {
           className="relative h-[600px]"
         >
           <div className="absolute top-4 left-4 animate-float">
-            <PhotoStrip imgs={[IMG.selfie, IMG.friends, IMG.laughing, IMG.coffee]} rotate={-8} />
+            <PhotoStrip src={PHOTOSTRIPS[0]} rotate={-8} width={210} />
           </div>
-          <div className="absolute top-24 right-8 animate-float" style={{ animationDelay: '1.5s' }}>
-            <PhotoStrip imgs={[IMG.qrScan, IMG.cafeInterior, IMG.booth, IMG.mall]} rotate={10} />
+          <div className="absolute top-20 right-4 animate-float" style={{ animationDelay: '1.5s' }}>
+            <PhotoStrip src={PHOTOSTRIPS[1]} rotate={10} width={200} />
           </div>
-          <div className="absolute bottom-16 left-24 animate-float" style={{ animationDelay: '0.7s' }}>
-            <PhotoStrip imgs={[IMG.laughing, IMG.selfie, IMG.friends, IMG.qrPhone]} rotate={-4} />
+          <div className="absolute bottom-14 left-24 animate-float" style={{ animationDelay: '0.7s' }}>
+            <PhotoStrip src={PHOTOSTRIPS[2]} rotate={-4} width={210} />
           </div>
-          <div className="absolute bottom-8 right-4 animate-float" style={{ animationDelay: '2.2s' }}>
-            <PhotoStrip imgs={[IMG.coffee, IMG.friends, IMG.selfie, IMG.laughing]} rotate={6} />
+          <div className="absolute bottom-4 right-2 animate-float" style={{ animationDelay: '2.2s' }}>
+            <PhotoStrip src={PHOTOSTRIPS[4]} rotate={6} width={200} />
           </div>
           <div className="absolute inset-0 -z-10 rounded-full bg-blush/10 blur-[100px]" />
         </motion.div>
