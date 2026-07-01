@@ -13,16 +13,18 @@ import {
 import {
   ArrowRight,
   ArrowUpRight,
+  Award,
   Camera,
   Check,
   ChevronDown,
+  Heart,
   Instagram,
   MapPin,
   Menu,
   MessageCircle,
   Phone,
-  Play,
   QrCode,
+  Share2,
   Sparkles,
   Star,
   Trophy,
@@ -38,19 +40,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import {
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Area,
-  AreaChart,
-  CartesianGrid,
-} from 'recharts'
 import { toast } from 'sonner'
 
 /* ---------- CONTENT / DATA ---------- */
@@ -74,19 +63,24 @@ const NAV_LINKS = [
   { label: 'The Problem', href: '#problem' },
   { label: 'Why It Works', href: '#why' },
   { label: 'How', href: '#how' },
-  { label: 'Results', href: '#results' },
+  { label: 'Experience', href: '#experience' },
   { label: 'Locations', href: '#locations' },
   { label: 'Booths', href: '#booths' },
-  { label: 'Franchise', href: '#franchise' },
+  { label: 'Exclusivity', href: '#exclusivity' },
   { label: 'FAQ', href: '#faq' },
 ]
 
+const CONTACTS = {
+  business: '9984849989',
+  franchise: '7311133888',
+}
+
 const STATS = [
   { value: 632, suffix: '+', label: 'Sessions in one month', sub: 'at our first location' },
-  { value: 1.58, prefix: '₹', suffix: 'L+', label: 'Customer transactions', sub: 'generated' },
-  { value: 18960, prefix: '₹', label: 'Café commission', sub: 'earned by partner' },
   { value: 20, suffix: '+', label: 'Paid sessions daily', sub: 'consistent average' },
   { value: 100, suffix: '%', label: 'Fully operated', sub: 'by Says Cheese' },
+  { value: 0, label: 'Investment required', sub: 'from venue partners' },
+  { value: 100, suffix: '%', label: 'Organic brand exposure', sub: 'every printed strip' },
 ]
 
 const WHY_ITEMS = [
@@ -101,7 +95,7 @@ const WHY_ITEMS = [
 const HOW_STEPS = [
   { n: '01', title: 'We install.', body: 'A premium booth is delivered, installed and calibrated at your venue.' },
   { n: '02', title: 'Customers scan QR.', body: 'A photostrip session begins with a single scan — no app needed.' },
-  { n: '03', title: 'Payment happens instantly.', body: '₹250 per session, paid via UPI. Direct, secure, automated.' },
+  { n: '03', title: 'Payment happens instantly.', body: 'A frictionless UPI experience. Fully self-serve. Fully automated.' },
   { n: '04', title: 'Customers enjoy the session.', body: 'Aesthetic lighting, curated themes, four premium shots.' },
   { n: '05', title: 'Photostrips print instantly.', body: 'Thermal-printed keepsakes with your branding, in seconds.' },
   { n: '06', title: 'They leave carrying your brand.', body: 'Fridges. Wallets. Instagram feeds. Your logo goes with them.' },
@@ -161,24 +155,25 @@ const COMPARISON = [
 ]
 
 const FAQS = [
-  { q: 'Who pays for the sessions?', a: 'Customers. It is a fully self-serve, paid experience.' },
-  { q: 'How much does a session cost?', a: '₹250 per session — four premium photostrip shots, printed instantly.' },
-  { q: 'Do cafés or venues have to pay?', a: 'No. Zero setup cost. Zero monthly cost. You earn a commission on every session.' },
-  { q: 'Who manages maintenance?', a: 'Says Cheese, end-to-end. Uptime, cleaning, servicing — all on us.' },
+  { q: 'What does a session include?', a: 'Four premium photostrip shots printed instantly — a curated experience your guests keep forever, carrying your venue’s branding wherever they go.' },
+  { q: 'Do cafés or venues have to pay anything?', a: 'No. Traditional experiential marketing campaigns cost businesses thousands of rupees every month. Says Cheese creates long-term organic brand visibility at absolutely zero cost to our venue partners.' },
+  { q: 'What is the venue responsible for?', a: 'Nothing operational. Our installation requires zero investment, zero maintenance, and zero operational effort from the venue.' },
+  { q: 'Who manages maintenance & servicing?', a: 'Says Cheese, end-to-end. Uptime, cleaning, servicing — all on us.' },
   { q: 'Who replaces the paper and consumables?', a: 'Says Cheese. You never lift a finger.' },
-  { q: 'How much floor space is required?', a: 'A footprint of roughly 4ft × 4ft (approximately 1.2m × 1.2m) with 7ft clearance.' },
+  { q: 'How much floor space is required?', a: 'A footprint of 5 ft × 6 ft. The installation is designed to blend beautifully with your venue’s ambience while occupying minimal space.' },
+  { q: 'How is Says Cheese different from a regular photobooth?', a: 'Unlike paid advertisements that disappear in seconds, printed memories stay with customers for years. Every strip is a physical reminder of your venue.' },
 ]
 
-const CHART_DATA = [
-  { d: 'W1', sessions: 92, revenue: 23000 },
-  { d: 'W2', sessions: 128, revenue: 32000 },
-  { d: 'W3', sessions: 174, revenue: 43500 },
-  { d: 'W4', sessions: 238, revenue: 59500 },
-]
+const CHART_DATA_REMOVED = []
+const DAILY_REMOVED = []
 
-const DAILY = [
-  { d: 'Mon', v: 18 }, { d: 'Tue', v: 21 }, { d: 'Wed', v: 19 },
-  { d: 'Thu', v: 24 }, { d: 'Fri', v: 32 }, { d: 'Sat', v: 41 }, { d: 'Sun', v: 38 },
+const EXPERIENCE_PILLARS = [
+  { icon: Sparkles, title: 'Aesthetic Interior Element', body: 'An installation designed to complement your ambience — never to intrude on it.' },
+  { icon: Heart, title: 'Customer Retention', body: 'Guests leave with a keepsake carrying your venue’s branding, quietly bringing them back.' },
+  { icon: Share2, title: 'Organic Brand Visibility', body: 'Every shared photograph naturally promotes your location across social feeds.' },
+  { icon: Instagram, title: 'Instagram Destination', body: 'Encourages visitors to create, tag and share content that reaches new audiences.' },
+  { icon: Award, title: 'Premium Guest Experience', body: 'Transforms an ordinary visit into a moment worth remembering — and returning for.' },
+  { icon: Zap, title: 'Zero Operational Effort', body: 'We manage installation, maintenance, consumables and support. You focus on hospitality.' },
 ]
 
 /* ---------- HELPERS ---------- */
@@ -500,7 +495,7 @@ function SocialProof() {
                     to={s.value}
                     prefix={s.prefix || ''}
                     suffix={s.suffix || ''}
-                    decimals={s.value < 10 ? 2 : 0}
+                    decimals={s.value > 0 && s.value < 10 ? 2 : 0}
                   />
                 </div>
                 <div className="mt-4 text-sm text-white/85">{s.label}</div>
@@ -593,8 +588,8 @@ function Solution() {
             <span className="italic font-light text-gradient-blush">never throw away.</span>
           </h2>
           <div className="mt-10 space-y-4 text-white/70 text-lg leading-relaxed max-w-md">
-            <p>Every printed photostrip becomes a tiny billboard carrying your café's branding.</p>
-            <p>Every customer leaves with your logo. Every photo shared online promotes your venue.</p>
+            <p>Traditional experiential marketing costs businesses thousands of rupees every month — and disappears the moment the campaign ends.</p>
+            <p>Every printed photostrip becomes a physical reminder of your venue. Every customer leaves carrying your brand.</p>
             <p className="text-blush">Every memory reminds them exactly where it happened.</p>
           </div>
         </motion.div>
@@ -734,100 +729,146 @@ function HowItWorks() {
   )
 }
 
-/* ---------- REAL RESULTS DASHBOARD ---------- */
+/* ---------- MORE THAN A PHOTOBOOTH ---------- */
 
-function Results() {
+function Experience() {
   return (
-    <section id="results" className="relative py-32 md:py-40 border-t border-white/5">
+    <section id="experience" className="relative py-32 md:py-40 border-t border-white/5 overflow-hidden">
+      <div className="absolute inset-0 -z-10 opacity-[0.07]">
+        <img src={IMG.cafeInterior} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black" />
+      </div>
       <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div className="max-w-2xl mb-14">
-          <p className="text-blush uppercase tracking-[0.3em] text-xs mb-4">Real Results</p>
-          <h2 className="font-heading text-4xl md:text-6xl font-bold">
-            A live view of what
+        <div className="max-w-3xl mb-16">
+          <p className="text-blush uppercase tracking-[0.3em] text-xs mb-4">The Experience</p>
+          <h2 className="font-heading text-4xl md:text-6xl font-bold leading-[1.02]">
+            More than
             <br />
-            <span className="text-gradient-gold">one booth does.</span>
+            <span className="text-gradient-blush italic">a photobooth.</span>
           </h2>
+          <p className="mt-6 text-white/60 text-lg leading-relaxed max-w-xl">
+            An installation designed to elevate your venue — not compete with it. Every element is
+            considered, every moment is memorable.
+          </p>
         </div>
-
-        <div className="glass rounded-3xl p-6 md:p-10">
-          {/* KPI row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {[
-              { k: '632', l: 'Sessions', sub: '+38% MoM' },
-              { k: '₹1.58L', l: 'Transactions', sub: '4-week window' },
-              { k: '₹18,960', l: 'Café Commission', sub: 'auto-transferred' },
-              { k: '21', l: 'Sessions / day', sub: 'rolling average' },
-            ].map((k) => (
-              <div key={k.l} className="rounded-2xl bg-white/[0.03] border border-white/5 p-5">
-                <div className="text-xs text-white/40">{k.l}</div>
-                <div className="font-heading text-3xl md:text-4xl font-bold mt-1">{k.k}</div>
-                <div className="text-[11px] text-blush mt-1">{k.sub}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 mt-8">
-            <div className="md:col-span-2 rounded-2xl bg-white/[0.03] border border-white/5 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <div className="text-sm text-white/60">Revenue growth (weekly)</div>
-                  <div className="font-heading text-xl">Seezen Café · Kanpur</div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {EXPERIENCE_PILLARS.map((f, i) => (
+            <motion.div
+              key={f.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ delay: i * 0.06 }}
+              className="glass rounded-2xl p-8 hover-glow group relative overflow-hidden"
+            >
+              <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-blush/5 blur-3xl group-hover:bg-blush/10 transition-colors" />
+              <div className="relative">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blush/20 to-transparent border border-blush/30 flex items-center justify-center mb-6">
+                  <f.icon className="w-5 h-5 text-blush" />
                 </div>
-                <div className="text-xs text-blush">Live</div>
+                <h3 className="font-heading font-semibold text-2xl mb-3 leading-tight">{f.title}</h3>
+                <p className="text-white/55 text-[15px] leading-relaxed">{f.body}</p>
               </div>
-              <div className="h-56">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={CHART_DATA}>
-                    <defs>
-                      <linearGradient id="pinkG" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#F5D5D0" stopOpacity={0.6} />
-                        <stop offset="100%" stopColor="#F5D5D0" stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-                    <XAxis dataKey="d" stroke="#ffffff60" fontSize={11} />
-                    <YAxis stroke="#ffffff60" fontSize={11} />
-                    <Tooltip
-                      contentStyle={{
-                        background: '#0A0A0A',
-                        border: '1px solid #ffffff20',
-                        borderRadius: 12,
-                      }}
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="revenue"
-                      stroke="#F5D5D0"
-                      strokeWidth={2}
-                      fill="url(#pinkG)"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            <div className="rounded-2xl bg-white/[0.03] border border-white/5 p-6">
-              <div className="text-sm text-white/60">Sessions this week</div>
-              <div className="font-heading text-xl mb-4">Peak: Saturday</div>
-              <div className="h-56">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={DAILY}>
-                    <XAxis dataKey="d" stroke="#ffffff60" fontSize={11} />
-                    <YAxis stroke="#ffffff60" fontSize={11} />
-                    <Tooltip
-                      contentStyle={{
-                        background: '#0A0A0A',
-                        border: '1px solid #ffffff20',
-                        borderRadius: 12,
-                      }}
-                    />
-                    <Bar dataKey="v" fill="#D4AF37" radius={[6, 6, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </div>
+
+        {/* Quiet pull quote */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 max-w-4xl mx-auto text-center"
+        >
+          <p className="font-heading text-2xl md:text-4xl font-light leading-tight italic text-white/80">
+            “Unlike paid advertisements that disappear in seconds,
+            <br />
+            <span className="text-gradient-gold not-italic font-normal">printed memories stay with customers for years.</span>”
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+/* ---------- NOT EVERY VENUE QUALIFIES ---------- */
+
+function Exclusivity({ onCta }) {
+  return (
+    <section id="exclusivity" className="relative py-32 md:py-44 overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-[#120A0B] to-black" />
+        <div className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-blush/10 blur-[120px]" />
+        <div className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full bg-[#D4AF37]/10 blur-[120px]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto"
+        >
+          <div className="inline-flex items-center gap-2 glass-blush px-4 py-1.5 rounded-full text-[10px] uppercase tracking-[0.3em] text-blush mb-8">
+            <Award className="w-3 h-3" />
+            By invitation
+          </div>
+          <h2 className="font-heading text-5xl md:text-7xl font-bold leading-[0.98] tracking-tight">
+            Not every venue
+            <br />
+            <span className="text-gradient-blush italic font-light">qualifies.</span>
+          </h2>
+          <div className="mt-10 space-y-5 text-white/70 text-lg leading-relaxed max-w-2xl mx-auto">
+            <p>Our installations are intentionally limited.</p>
+            <p>
+              Every partner venue is carefully selected based on
+              <span className="text-blush"> customer experience</span>,
+              <span className="text-blush"> ambience</span>,
+              <span className="text-blush"> audience quality</span>, and
+              <span className="text-blush"> daily footfall</span>.
+            </p>
+            <p>
+              This ensures every Says Cheese location remains premium, desirable, and delivers maximum
+              value to both customers and venue partners.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Qualification pillars */}
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          {['Ambience', 'Audience', 'Footfall', 'Standards'].map((label, i) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="glass rounded-2xl px-5 py-6 text-center"
+            >
+              <div className="text-blush font-heading text-2xl font-bold mb-1">0{i + 1}</div>
+              <div className="text-white/80 text-sm uppercase tracking-widest">{label}</div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-14 flex flex-col items-center gap-4"
+        >
+          <Button
+            onClick={onCta}
+            size="lg"
+            className="bg-blush text-black hover:bg-white rounded-full h-14 px-8 text-base font-medium group"
+          >
+            Request Eligibility Assessment
+            <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Button>
+          <p className="text-white/40 text-xs uppercase tracking-widest">
+            Applications reviewed personally by our founding team
+          </p>
+        </motion.div>
       </div>
     </section>
   )
@@ -1317,7 +1358,8 @@ function Footer() {
         <div>
           <div className="text-blush uppercase text-xs tracking-widest mb-4">Contact</div>
           <ul className="space-y-2 text-sm text-white/60">
-            <li className="flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> +91 · Available on WhatsApp</li>
+            <li className="flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Business · +91 {CONTACTS.business}</li>
+            <li className="flex items-center gap-2"><Phone className="w-3.5 h-3.5" /> Franchise · +91 {CONTACTS.franchise}</li>
             <li className="flex items-center gap-2"><Instagram className="w-3.5 h-3.5" /> @says.cheese.in</li>
             <li className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5" /> Kanpur · Noida · India</li>
           </ul>
@@ -1336,7 +1378,7 @@ function Footer() {
 function StickyWA() {
   return (
     <a
-      href="https://wa.me/919999999999"
+      href={`https://wa.me/91${CONTACTS.business}`}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-40 group"
@@ -1347,7 +1389,7 @@ function StickyWA() {
         <MessageCircle className="w-6 h-6 text-white" />
       </div>
       <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap glass px-3 py-1.5 rounded-full text-xs opacity-0 group-hover:opacity-100 transition-opacity">
-        Chat with us
+        Chat on WhatsApp · +91 {CONTACTS.business}
       </span>
     </a>
   )
@@ -1357,13 +1399,14 @@ function StickyWA() {
 
 function Marquee() {
   const items = [
-    '★ Zero upfront cost',
-    '★ Café pays nothing',
+    '★ Zero investment',
+    '★ Zero maintenance',
+    '★ Zero operational effort',
     '★ 100% operated by Says Cheese',
-    '★ Instagram-native marketing',
-    '★ ₹250 per session',
-    '★ Instant photostrips',
-    '★ Premium aesthetic install',
+    '★ Instagram-native visibility',
+    '★ Premium ambience enhancement',
+    '★ Physical brand recall',
+    '★ Memory-linked marketing',
   ]
   const list = [...items, ...items, ...items]
   return (
@@ -1419,10 +1462,11 @@ const App = () => {
       <Solution />
       <WhyItWorks />
       <HowItWorks />
-      <Results />
+      <Experience />
       <Locations />
       <Gallery />
       <Booths />
+      <Exclusivity onCta={scrollToContact} />
       <WhyPartner />
       <Franchise onSubmitLead={submitLead} />
       <FAQ />
