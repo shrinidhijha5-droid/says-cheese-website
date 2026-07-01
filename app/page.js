@@ -302,9 +302,44 @@ function CyclingPhotoStrip({
 
 /* ---------- NAVBAR ---------- */
 
+function useActiveSection(ids) {
+  const [active, setActive] = useState(ids[0])
+  useEffect(() => {
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean)
+    if (!elements.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Pick the entry closest to the top of the viewport that is intersecting
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible.length > 0) {
+          setActive(visible[0].target.id)
+        }
+      },
+      {
+        // Trigger when a section is around the upper third of the viewport
+        rootMargin: '-30% 0px -55% 0px',
+        threshold: 0,
+      },
+    )
+
+    elements.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [ids])
+
+  return active
+}
+
 function Nav({ onCta }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const sectionIds = NAV_LINKS.map((l) => l.href.replace('#', ''))
+  const active = useActiveSection(sectionIds)
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
@@ -330,15 +365,28 @@ function Nav({ onCta }) {
           </span>
         </a>
         <nav className="hidden lg:flex items-center gap-8">
-          {NAV_LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm text-white/70 hover:text-blush transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((l) => {
+            const id = l.href.replace('#', '')
+            const isActive = active === id
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                className={`relative text-sm transition-colors ${
+                  isActive ? 'text-blush' : 'text-white/70 hover:text-blush'
+                }`}
+              >
+                {l.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active-dot"
+                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-blush"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+              </a>
+            )
+          })}
         </nav>
         <div className="hidden lg:block">
           <Button
@@ -364,16 +412,23 @@ function Nav({ onCta }) {
             exit={{ opacity: 0, y: -10 }}
             className="lg:hidden mx-4 mt-3 glass rounded-2xl p-6 flex flex-col gap-4"
           >
-            {NAV_LINKS.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="text-white/80 hover:text-blush"
-              >
-                {l.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((l) => {
+              const id = l.href.replace('#', '')
+              const isActive = active === id
+              return (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-center gap-2 transition-colors ${
+                    isActive ? 'text-blush' : 'text-white/80 hover:text-blush'
+                  }`}
+                >
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-blush" />}
+                  {l.label}
+                </a>
+              )
+            })}
             <Button
               onClick={() => {
                 setOpen(false)
