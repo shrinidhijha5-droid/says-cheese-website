@@ -45,7 +45,11 @@ import { toast } from 'sonner'
 /* ---------- CONTENT / DATA ---------- */
 
 const IMG = {
-  hero: 'https://images.pexels.com/photos/16072911/pexels-photo-16072911.jpeg',
+  hero: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/sa0odd86_WhatsApp%20Image%202026-06-01%20at%2014.02.06%20%281%29.jpeg',
+  boothWide: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/x63ssdjo_WhatsApp%20Image%202026-06-01%20at%2014.01.49.jpeg',
+  boothStraight: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/ghqaceov_WhatsApp%20Image%202026-06-01%20at%2014.01.33.jpeg',
+  boothAngle: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/1covls13_WhatsApp%20Image%202026-06-01%20at%2014.01.32.jpeg',
+  boothCurtain: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/jx75ji2o_WhatsApp%20Image%202026-06-01%20at%2014.01.32%20%281%29.jpeg',
   booth: 'https://images.pexels.com/photos/14152627/pexels-photo-14152627.png',
   cafeNeon: 'https://images.pexels.com/photos/27623551/pexels-photo-27623551.jpeg',
   cafeInterior: 'https://images.unsplash.com/photo-1566304092989-5b82e58ff842',
@@ -65,7 +69,6 @@ const NAV_LINKS = [
   { label: 'How', href: '#how' },
   { label: 'Experience', href: '#experience' },
   { label: 'Locations', href: '#locations' },
-  { label: 'Booths', href: '#booths' },
   { label: 'Exclusivity', href: '#exclusivity' },
   { label: 'FAQ', href: '#faq' },
 ]
@@ -76,8 +79,8 @@ const CONTACTS = {
 }
 
 const STATS = [
-  { value: 632, suffix: '+', label: 'Sessions in one month', sub: 'at our first location' },
-  { value: 20, suffix: '+', label: 'Paid sessions daily', sub: 'consistent average' },
+  { value: 1000, suffix: '+', label: 'Sessions per month', sub: 'at our first location' },
+  { value: 35, suffix: '+', label: 'Paid sessions daily', sub: 'consistent average' },
   { value: 100, suffix: '%', label: 'Fully operated', sub: 'by Says Cheese' },
   { value: 0, label: 'Investment required', sub: 'from venue partners' },
   { value: 100, suffix: '%', label: 'Organic brand exposure', sub: 'every printed strip' },
@@ -102,8 +105,8 @@ const HOW_STEPS = [
 ]
 
 const LOCATIONS = [
-  { name: 'Seezen Café', city: 'Kanpur', status: 'Operational', img: IMG.cafeInterior },
-  { name: 'Studio XO', city: 'Kanpur', status: 'Operational', img: IMG.arena },
+  { name: 'Seezen Café', city: 'Kanpur', status: 'Operational', img: IMG.boothStraight },
+  { name: 'Studio XO', city: 'Kanpur', status: 'Operational', img: IMG.boothCurtain },
 ]
 
 const GALLERY = [
@@ -519,8 +522,8 @@ function Problem() {
   ]
   return (
     <section id="problem" className="relative py-32 md:py-40 overflow-hidden">
-      <div className="absolute inset-0 -z-10 opacity-25">
-        <img src={IMG.cafeInterior} alt="" className="w-full h-full object-cover" />
+      <div className="absolute inset-0 -z-10 opacity-20">
+        <img src={IMG.boothWide} alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
       </div>
       <div className="max-w-5xl mx-auto px-6 md:px-10">
@@ -732,8 +735,8 @@ function HowItWorks() {
 function Experience() {
   return (
     <section id="experience" className="relative py-32 md:py-40 border-t border-white/5 overflow-hidden">
-      <div className="absolute inset-0 -z-10 opacity-[0.07]">
-        <img src={IMG.cafeInterior} alt="" className="w-full h-full object-cover" />
+      <div className="absolute inset-0 -z-10 opacity-[0.09]">
+        <img src={IMG.boothAngle} alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black" />
       </div>
       <div className="max-w-7xl mx-auto px-6 md:px-10">
@@ -1484,8 +1487,6 @@ const App = () => {
       <HowItWorks />
       <Experience />
       <Locations />
-      <Gallery />
-      <Booths />
       <Exclusivity onCta={scrollToContact} />
       <WhyPartner />
       <Franchise onSubmitLead={submitLead} />
