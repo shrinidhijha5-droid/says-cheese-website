@@ -411,31 +411,31 @@ function Hero({ onCta }) {
           alt=""
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/65 to-black" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-black/20" />
       </motion.div>
 
-      {/* Floating real photostrips — cycling */}
+      {/* Floating real photostrips — cycling. Anchored to edges so they never cross the text column. */}
       <motion.div
         style={{ opacity }}
-        className="absolute top-[16%] right-[5%] hidden md:block animate-float z-10"
+        className="absolute top-[14%] right-[3%] hidden xl:block animate-float z-10"
       >
         <CyclingPhotoStrip
           srcs={PHOTOSTRIPS}
           rotate={8}
-          width={210}
+          width={180}
           interval={3800}
           startIndex={0}
         />
       </motion.div>
       <motion.div
         style={{ opacity }}
-        className="absolute bottom-[18%] right-[16%] hidden lg:block animate-float z-10"
+        className="absolute bottom-[10%] right-[12%] hidden xl:block animate-float z-10"
       >
         <CyclingPhotoStrip
           srcs={PHOTOSTRIPS}
           rotate={-12}
-          width={190}
+          width={170}
           interval={4200}
           startIndex={2}
           className="[animation-delay:1s]"
@@ -443,12 +443,12 @@ function Hero({ onCta }) {
       </motion.div>
       <motion.div
         style={{ opacity }}
-        className="absolute top-[54%] left-[3%] hidden lg:block animate-float z-10"
+        className="absolute top-[62%] right-[26%] hidden 2xl:block animate-float z-10"
       >
         <CyclingPhotoStrip
           srcs={PHOTOSTRIPS}
           rotate={-6}
-          width={200}
+          width={165}
           interval={4600}
           startIndex={4}
         />
@@ -470,7 +470,7 @@ function Hero({ onCta }) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="font-heading font-black text-[13vw] md:text-[7.5vw] leading-[0.92] tracking-[-0.03em] max-w-5xl"
+          className="font-heading font-black text-[12vw] sm:text-[9vw] md:text-[6.4vw] xl:text-[5.6vw] leading-[0.94] tracking-[-0.03em] max-w-[16ch] xl:max-w-[14ch]"
         >
           Every Customer
           <br />
