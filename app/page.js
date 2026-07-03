@@ -114,7 +114,12 @@ const HOW_STEPS = [
 
 const LOCATIONS = [
   { name: 'Seezen Café', city: 'Kanpur', status: 'Operational', img: IMG.boothStraight },
-  { name: 'Studio XO', city: 'Kanpur', status: 'Operational', img: IMG.boothCurtain },
+  {
+    name: 'Studio XO',
+    city: 'Kanpur',
+    status: 'Operational',
+    img: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/5qaqwcwk_Untitled%20design%20%2823%29.png',
+  },
 ]
 
 const GALLERY = [
