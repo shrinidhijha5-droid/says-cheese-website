@@ -45,30 +45,33 @@ import { toast } from 'sonner'
 /* ---------- CONTENT / DATA ---------- */
 
 const PHOTOSTRIPS = [
-  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/bvsncbst_20260528_171350_231_1x.jpg',
-  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/fjszz590_20260525_195958_672_1x.jpg',
-  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/4837adtj_20260525_172934_564_1x.jpg',
-  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/aoiz5j8q_20260524_190021_478_1x%20%281%29.jpg',
-  'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/gbbky7bg_20260628_224556_308_1x.jpg',
+  '/images/strip-1-dietcoke.jpg',
+  '/images/strip-2-zootopia-couple.jpg',
+  '/images/strip-3-zootopia-trio.jpg',
+  '/images/strip-4-okjaanu.jpg',
+  '/images/strip-5-seezen-beach.jpg',
 ]
 
 const IMG = {
-  hero: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/sa0odd86_WhatsApp%20Image%202026-06-01%20at%2014.02.06%20%281%29.jpeg',
-  boothWide: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/x63ssdjo_WhatsApp%20Image%202026-06-01%20at%2014.01.49.jpeg',
-  boothStraight: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/ghqaceov_WhatsApp%20Image%202026-06-01%20at%2014.01.33.jpeg',
-  boothAngle: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/1covls13_WhatsApp%20Image%202026-06-01%20at%2014.01.32.jpeg',
-  boothCurtain: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/jx75ji2o_WhatsApp%20Image%202026-06-01%20at%2014.01.32%20%281%29.jpeg',
-  booth: 'https://images.pexels.com/photos/14152627/pexels-photo-14152627.png',
-  cafeNeon: 'https://images.pexels.com/photos/27623551/pexels-photo-27623551.jpeg',
-  cafeInterior: 'https://images.unsplash.com/photo-1566304092989-5b82e58ff842',
-  mall: 'https://images.unsplash.com/photo-1691421123450-7f79538902ae',
-  arena: 'https://images.unsplash.com/photo-1696208732970-5744331c9fdf',
-  selfie: 'https://images.unsplash.com/photo-1600209142000-aa256622e64a',
-  friends: 'https://images.unsplash.com/photo-1559026432-016825fa59df',
-  qrPhone: 'https://images.unsplash.com/photo-1595079676339-1534801ad6cf',
-  qrScan: 'https://images.pexels.com/photos/16345589/pexels-photo-16345589.jpeg',
-  coffee: 'https://images.unsplash.com/photo-1510972527921-ce03766a1cf1',
-  laughing: 'https://images.unsplash.com/photo-1582298538104-fe2e74c27f59',
+  hero: '/images/hero-booth.jpeg',
+  boothWide: '/images/booth-wide.jpeg',
+  boothStraight: '/images/booth-straight.jpeg',
+  boothAngle: '/images/booth-angle.jpeg',
+  boothCurtain: '/images/booth-curtain.jpeg',
+  studioXo: '/images/studioxo-midnight.png',
+  // Legacy keys kept as safe fallbacks (unused by current sections but referenced
+  // by dead-code constants for BOOTHS/GALLERY that are no longer rendered).
+  booth: '/images/booth-straight.jpeg',
+  cafeNeon: '/images/booth-curtain.jpeg',
+  cafeInterior: '/images/booth-wide.jpeg',
+  mall: '/images/booth-angle.jpeg',
+  arena: '/images/booth-curtain.jpeg',
+  selfie: '/images/strip-1-dietcoke.jpg',
+  friends: '/images/strip-2-zootopia-couple.jpg',
+  qrPhone: '/images/strip-3-zootopia-trio.jpg',
+  qrScan: '/images/strip-4-okjaanu.jpg',
+  coffee: '/images/strip-5-seezen-beach.jpg',
+  laughing: '/images/strip-1-dietcoke.jpg',
 }
 
 const NAV_LINKS = [
@@ -114,12 +117,7 @@ const HOW_STEPS = [
 
 const LOCATIONS = [
   { name: 'Seezen Café', city: 'Kanpur', status: 'Operational', img: IMG.boothStraight },
-  {
-    name: 'Studio XO',
-    city: 'Kanpur',
-    status: 'Operational',
-    img: 'https://customer-assets.emergentagent.com/job_luxury-booth-network/artifacts/5qaqwcwk_Untitled%20design%20%2823%29.png',
-  },
+  { name: 'Studio XO', city: 'Kanpur', status: 'Operational', img: IMG.studioXo },
 ]
 
 const GALLERY = [
