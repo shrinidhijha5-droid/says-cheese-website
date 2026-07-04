@@ -1320,7 +1320,7 @@ function Franchise() {
             <span className="text-gradient-gold italic">to your city.</span>
           </h2>
           <p className="mt-8 text-white/70 text-lg max-w-lg leading-relaxed">
-            We are onboarding a limited number of city partners for 2025. If you have café or venue
+            We are onboarding a limited number of city partners for 2026. If you have café or venue
             relationships in your city — we would love to talk.
           </p>
           <div className="mt-10 grid sm:grid-cols-2 gap-4">
