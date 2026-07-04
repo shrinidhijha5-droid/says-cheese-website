@@ -87,6 +87,55 @@ const NAV_LINKS = [
 const CONTACTS = {
   business: '9984849989',
   franchise: '7311133888',
+  // Every website form opens WhatsApp with the enquiry text pre-filled to this
+  // number. Change here to update everywhere.
+  whatsappRoute: '917311133888',
+}
+
+const BUSINESS_TYPES = [
+  'Café',
+  'Restaurant',
+  'Mall',
+  'Gaming Arena',
+  'Entertainment Centre',
+  'Hotel',
+  'Resort',
+  'Event Venue',
+  'Franchise Partner',
+  'Investor',
+  'Other',
+]
+
+/**
+ * Builds and opens a WhatsApp deep link with the enquiry text pre-filled.
+ * Runs entirely in the browser — no backend, no server action.
+ * On desktop with WhatsApp Desktop installed the OS opens the native app,
+ * otherwise the browser falls back to WhatsApp Web.
+ */
+function openWhatsAppEnquiry({ name, business, type, city, phone, email, message }) {
+  const line = (label, value) => `${label}:\n${value && String(value).trim() ? value : '—'}`
+  const body = [
+    'New Website Enquiry',
+    '',
+    line('Name', name),
+    line('Business', business),
+    line('Business Type', type),
+    line('City', city),
+    line('Phone', phone),
+    line('Email', email),
+    line('Message', message),
+    '',
+    'Submitted from:',
+    'Says Cheese Website',
+  ].join('\n')
+  const url = `https://wa.me/${CONTACTS.whatsappRoute}?text=${encodeURIComponent(body)}`
+  // window.open with a user-initiated click preserves the "user gesture" that
+  // lets WhatsApp Desktop take over via its protocol handler on macOS/Windows.
+  const win = window.open(url, '_blank', 'noopener,noreferrer')
+  if (!win) {
+    // Popup blocked — fall back to same-tab navigation.
+    window.location.href = url
+  }
 }
 
 const STATS = [
@@ -1232,22 +1281,32 @@ function WhyPartner() {
 
 /* ---------- FRANCHISE ---------- */
 
-function Franchise({ onSubmitLead }) {
-  const [form, setForm] = useState({ name: '', contact: '', city: '', message: '' })
-  const [loading, setLoading] = useState(false)
+function Franchise() {
+  const [form, setForm] = useState({
+    name: '',
+    business: '',
+    city: '',
+    phone: '',
+    email: '',
+    message: '',
+  })
 
-  const submit = async (e) => {
+  const submit = (e) => {
     e.preventDefault()
-    if (!form.name || !form.contact) {
-      toast.error('Please share your name and contact')
+    if (!form.name.trim() || !form.phone.trim() || !form.city.trim()) {
+      toast.error('Please share your name, city and phone')
       return
     }
-    setLoading(true)
-    const ok = await onSubmitLead({ ...form, type: 'franchise' }, 'franchise')
-    setLoading(false)
-    if (ok) {
-      setForm({ name: '', contact: '', city: '', message: '' })
-    }
+    openWhatsAppEnquiry({
+      name: form.name,
+      business: form.business,
+      type: 'Franchise Partner',
+      city: form.city,
+      phone: form.phone,
+      email: form.email,
+      message: form.message,
+    })
+    toast.success('Opening WhatsApp to complete your enquiry…')
   }
 
   return (
@@ -1286,21 +1345,35 @@ function Franchise({ onSubmitLead }) {
         <form onSubmit={submit} className="glass rounded-3xl p-8 space-y-4">
           <div className="text-xs text-blush uppercase tracking-widest mb-2">Franchise enquiry</div>
           <Input
-            placeholder="Your name"
+            placeholder="Your name *"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
           />
           <Input
-            placeholder="Phone / WhatsApp"
-            value={form.contact}
-            onChange={(e) => setForm({ ...form, contact: e.target.value })}
+            placeholder="Business / company name"
+            value={form.business}
+            onChange={(e) => setForm({ ...form, business: e.target.value })}
             className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
           />
           <Input
-            placeholder="City"
+            placeholder="City *"
             value={form.city}
             onChange={(e) => setForm({ ...form, city: e.target.value })}
+            className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
+          />
+          <Input
+            placeholder="Phone / WhatsApp *"
+            inputMode="tel"
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
+          />
+          <Input
+            placeholder="Email"
+            type="email"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
           />
           <Textarea
@@ -1312,13 +1385,14 @@ function Franchise({ onSubmitLead }) {
           />
           <Button
             type="submit"
-            disabled={loading}
             className="w-full h-13 py-6 rounded-xl bg-blush text-black hover:bg-white font-medium text-base"
           >
-            {loading ? 'Submitting…' : 'Submit Franchise Enquiry'}
+            Send Franchise Enquiry on WhatsApp
             <ArrowRight className="ml-2 w-4 h-4" />
           </Button>
-          <p className="text-xs text-white/40 text-center">We reply within 24 hours.</p>
+          <p className="text-xs text-white/40 text-center">
+            Opens WhatsApp with your enquiry pre-filled.
+          </p>
         </form>
       </div>
     </section>
@@ -1358,26 +1432,39 @@ function FAQ() {
 
 /* ---------- CONTACT ---------- */
 
-function Contact({ onSubmitLead, contactRef }) {
+function Contact({ contactRef }) {
   const [tab, setTab] = useState('contact')
-  const [form, setForm] = useState({ name: '', contact: '', email: '', venue: '', message: '' })
-  const [loading, setLoading] = useState(false)
+  const [form, setForm] = useState({
+    name: '',
+    business: '',
+    type: '',
+    city: '',
+    phone: '',
+    email: '',
+    message: '',
+  })
 
   const TABS = [
     { id: 'contact', label: 'Become a Partner' },
     { id: 'franchise', label: 'Franchise Enquiry' },
   ]
 
-  const submit = async (e) => {
+  const submit = (e) => {
     e.preventDefault()
-    if (!form.name || !form.contact) {
-      toast.error('Please share your name and contact')
+    if (!form.name.trim() || !form.phone.trim()) {
+      toast.error('Please share your name and phone')
       return
     }
-    setLoading(true)
-    const ok = await onSubmitLead({ ...form, type: tab }, tab)
-    setLoading(false)
-    if (ok) setForm({ name: '', contact: '', email: '', venue: '', message: '' })
+    openWhatsAppEnquiry({
+      name: form.name,
+      business: form.business,
+      type: tab === 'franchise' ? 'Franchise Partner' : form.type,
+      city: form.city,
+      phone: form.phone,
+      email: form.email,
+      message: form.message,
+    })
+    toast.success('Opening WhatsApp to complete your enquiry…')
   }
 
   return (
@@ -1409,28 +1496,57 @@ function Contact({ onSubmitLead, contactRef }) {
 
           <form onSubmit={submit} className="grid md:grid-cols-2 gap-4">
             <Input
-              placeholder="Full name"
+              placeholder="Full name *"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
             />
             <Input
-              placeholder="Phone / WhatsApp"
-              value={form.contact}
-              onChange={(e) => setForm({ ...form, contact: e.target.value })}
+              placeholder="Phone / WhatsApp *"
+              inputMode="tel"
+              value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
               className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
             />
+            <Input
+              placeholder="Business / venue name"
+              value={form.business}
+              onChange={(e) => setForm({ ...form, business: e.target.value })}
+              className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
+            />
+            <Input
+              placeholder="City"
+              value={form.city}
+              onChange={(e) => setForm({ ...form, city: e.target.value })}
+              className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
+            />
+            {tab === 'contact' ? (
+              <select
+                value={form.type}
+                onChange={(e) => setForm({ ...form, type: e.target.value })}
+                className="bg-white/5 border border-white/10 h-12 rounded-xl px-3 text-white/90 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-blush/40"
+              >
+                <option value="" className="bg-neutral-900 text-white">Business type</option>
+                {BUSINESS_TYPES.map((t) => (
+                  <option key={t} value={t} className="bg-neutral-900 text-white">
+                    {t}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <Input
+                placeholder="Franchise partner (auto-filled)"
+                value="Franchise Partner"
+                readOnly
+                className="bg-white/5 border-white/10 h-12 rounded-xl text-white/60 focus-visible:ring-blush/40"
+              />
+            )}
             <Input
               placeholder="Email"
+              type="email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
-            />
-            <Input
-              placeholder={tab === 'franchise' ? 'City you want to franchise in' : 'Venue name & city'}
-              value={form.venue}
-              onChange={(e) => setForm({ ...form, venue: e.target.value })}
-              className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40"
+              className="bg-white/5 border-white/10 h-12 rounded-xl focus-visible:ring-blush/40 md:col-span-2"
             />
             <Textarea
               placeholder={
@@ -1445,12 +1561,14 @@ function Contact({ onSubmitLead, contactRef }) {
             />
             <Button
               type="submit"
-              disabled={loading}
               className="md:col-span-2 h-13 py-6 bg-blush text-black hover:bg-white rounded-xl font-medium text-base"
             >
-              {loading ? 'Sending…' : 'Send Enquiry'}
+              Send Enquiry on WhatsApp
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
+            <p className="md:col-span-2 text-xs text-white/40 text-center -mt-1">
+              Opens WhatsApp with your enquiry pre-filled. No data is stored on any server.
+            </p>
           </form>
         </div>
       </div>
@@ -1580,26 +1698,6 @@ const App = () => {
     contactRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const submitLead = async (payload, endpoint = 'leads') => {
-    try {
-      const res = await fetch(`/api/${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      const data = await res.json()
-      if (!res.ok) {
-        toast.error(data.error || 'Something went wrong')
-        return false
-      }
-      toast.success('We received your enquiry. We will reply within 24 hours.')
-      return true
-    } catch {
-      toast.error('Network error. Please try again.')
-      return false
-    }
-  }
-
   return (
     <main className="relative min-h-screen overflow-x-hidden">
       <MouseSpotlight />
@@ -1615,9 +1713,9 @@ const App = () => {
       <Locations />
       <Exclusivity onCta={scrollToContact} />
       <WhyPartner />
-      <Franchise onSubmitLead={submitLead} />
+      <Franchise />
       <FAQ />
-      <Contact onSubmitLead={submitLead} contactRef={contactRef} />
+      <Contact contactRef={contactRef} />
       <Footer />
       <StickyWA />
     </main>
